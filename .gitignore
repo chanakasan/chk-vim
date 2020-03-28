@@ -1,2 +1,3 @@
 box-vim-packs
 dist/_vim/pack/*
+!dist/_vim/pack/z-vim-customizer-pack
