@@ -1,0 +1,109 @@
+global !p
+from snippet_helpers import *
+endglobal
+
+
+
+# debugging
+snippet d "" w
+console.log("[DEBUG] ${1:${VISUAL:var}} =", $1)
+endsnippet
+
+snippet l "" w
+console.log("[INFO]", ${1:${VISUAL:var}})
+endsnippet
+# end debugging
+
+
+
+# variables
+snippet v
+const $1 = $2
+endsnippet
+
+snippet const
+const $1 = $2
+endsnippet
+
+snippet let
+let $1 = $2
+endsnippet
+# end variables
+
+
+
+snippet "%%" "" r
+${${1:${VISUAL:var}}}
+endsnippet
+
+snippet m  "" m
+${1:method}($3) {$0
+}
+endsnippet
+
+
+
+snippet if
+if ($1) {
+}
+endsnippet
+
+
+
+snippet exd
+export default $1
+endsnippet
+
+
+
+snippet class
+export default class `!p
+class_name = get_class_name(re, snip.basename)
+snip.rv = class_name` {$0
+}
+endsnippet
+
+
+
+snippet class_name
+`!p snip.rv = get_class_name(re, snip.basename)`
+endsnippet
+
+
+
+snippet catch
+catch (err) {
+}
+endsnippet
+
+
+
+# functions
+snippet construct
+constructor($1) {
+	super();
+}
+endsnippet
+
+snippet fun "" w
+function $1($2) {
+  ${VISUAL}$3
+}
+endsnippet
+
+snippet fn "" w
+($1) => {$2}
+endsnippet
+
+snippet ff "" w
+($1) => ($2)
+endsnippet
+
+snippet f "" w
+($1) =>$2
+endsnippet
+
+snippet fx
+const $1 = ($2) => $3
+endsnippet
+# end functions

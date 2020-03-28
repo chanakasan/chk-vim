@@ -1,0 +1,215 @@
+global !p
+from snippet_helpers import *
+endglobal
+
+
+
+snippet rDomRender
+ReactDOM.render($1, document.getElementById('$2'))
+endsnippet
+
+snippet rComPropt
+$1.propTypes = {
+	$2: $3,
+}
+endsnippet
+
+snippet rPropt
+React.PropTypes
+endsnippet
+
+
+
+# state
+snippet vp
+const { $0 } = this.props
+endsnippet
+
+snippet vs
+const { $0 } = this.state
+endsnippet
+
+snippet setSt
+this.setState({ $1 })
+endsnippet
+
+snippet setS
+set$1 = (${1/\w+/\l$0/g}) => this.setState({ ${1/\w+/\l$0/g} })
+endsnippet
+
+snippet useS
+const [$1, set${1/\w+/\u$0/g}] = useState($2)
+endsnippet
+# end state
+
+
+
+
+
+# lifecycle
+snippet didupdate
+componentDidUpdate(prevProps) {
+	$0
+}
+
+endsnippet
+
+snippet didmount
+componentDidMount() {
+	$0
+}
+
+endsnippet
+
+snippet willunmount
+componentWillUnmount() {
+	$0
+}
+
+endsnippet
+# end lifecycle
+
+
+
+snippet reducer
+const initialState = {
+
+}
+
+export default (state=initialState, action) => {
+	switch (action.type) {
+		case '$1': {
+			return Object.assign({}, state, {
+				$0
+			})
+		}
+
+		default:
+			return state;
+	}
+}
+endsnippet
+
+
+
+snippet rCom
+import React from "react";
+import styled from 'styled-components';
+
+export default () => (
+	<div>$1
+	</div>
+)
+endsnippet
+
+
+
+snippet rComClass
+import React from 'react';
+import styled from 'styled-components';
+
+export default class `!p
+class_name = get_class_name(re, snip.basename)
+snip.rv = class_name
+` extends React.Component {$0
+	render() {
+		return (
+			<div className={this.props.className}>
+				This is `!p snip.rv = class_name` component.
+			</div>
+		)
+	}
+}
+endsnippet
+
+
+
+snippet axiosCrud
+export function fetchList(dispatch, queryParams) {
+  return axios.get('_apiPath_?' + qs.stringify(queryParams)).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_LIST`, payload: response.data })
+  })
+}
+
+export function fetchRecord(dispatch, id) {
+  return axios.get(`_apiPath_/${id}`).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function createRecord(dispatch, params) {
+  return axios.post('_apiPath_', params).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function updateRecord(dispatch, params) {
+  return axios.patch(`_apiPath_/${params.id}`, params).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function destroyRecord(dispatch, record) {
+  return axios.delete(`_apiPath_/${record.id}`).then(() => {
+    dispatch({ type: `${_Namespace_}/REMOVE_RECORD`, payload: record })
+  })
+}
+endsnippet
+
+
+
+snippet rActionGroup
+export const $1Pending = createAction('$2/$3_PENDING')
+export const $1Success = createAction('$2/$3_SUCCESS')
+export const $1Error = createAction('$2/$3_ERROR')
+endsnippet
+
+
+snippet rReducer
+import { createAction, handleActions } from 'redux-actions'
+
+export const loadItemsPending = createAction('$1/LOAD_PENDING')
+export const loadItemsSuccess = createAction('$1/LOAD_SUCCESS')
+export const loadItemsError = createAction('$1/LOAD_ERROR')
+
+const initialState = {
+  pending: false,
+  items: []
+}
+
+export default handleActions(
+  {
+    [loadItemsPending]: state => ({
+      ...state,
+      pending: true
+    }),
+    [loadItemsSuccess]: (state, action) => ({
+      ...state,
+      pending: false,
+      items: action.payload
+    }),
+  },
+  initialState
+)
+endsnippet
+
+
+snippet rEpic
+import { combineEpics, ofType } from 'redux-observable'
+import { EMPTY } from 'rxjs'
+import { map, mergeMap, tap, catchError } from 'rxjs/operators'
+
+import { fetchStoreSettings } from 'src/api/mobile-pages'
+import {
+  loadItemsPending,
+  loadItemsSuccess,
+} from './index'
+
+const loadItems = action$ =>
+  action$.pipe(
+    ofType(loadItemsPending().type),
+    mergeMap(() =>
+      fetchStoreSettings().pipe(map(data => loadItemsSuccess(data)))
+    )
+  )
+endsnippet

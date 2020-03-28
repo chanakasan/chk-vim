@@ -1,0 +1,26 @@
+global !p
+def show_match_1():
+	snip.rv = match.group(1)
+endglobal
+
+
+
+snippet date
+`date +%Y-%m-%d`
+endsnippet
+
+
+
+snippet filename
+`!p
+filename = re.match(r'.*(?=\.)', fn).group()
+snip.rv = filename
+`
+endsnippet
+
+
+
+snippet to_titlecase "example transformation"
+${1:a text}
+${1/\w+\s*/\u$0/g}
+endsnippet
