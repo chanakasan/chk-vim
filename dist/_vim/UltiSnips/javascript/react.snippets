@@ -159,34 +159,34 @@ endsnippet
 
 
 snippet rActionGroup
-export const $1Pending = createAction('$2/$3_PENDING')
-export const $1Success = createAction('$2/$3_SUCCESS')
-export const $1Error = createAction('$2/$3_ERROR')
+export const ${1:item}${2:Load}Pending = createAction('$1/${2/\w+/\l$0/g}/pending')
+export const $1$2Success = createAction('$1/${2/\w+/\l$0/g}/success')
+export const $1$2Error = createAction('$1/${2/\w+/\l$0/g}/error')
 endsnippet
 
 
 snippet rReducer
 import { createAction, handleActions } from 'redux-actions'
 
-export const loadItemsPending = createAction('$1/LOAD_PENDING')
-export const loadItemsSuccess = createAction('$1/LOAD_SUCCESS')
-export const loadItemsError = createAction('$1/LOAD_ERROR')
+export const ${1:item}LoadPending = createAction('$1/load/pending')
+export const $1LoadSuccess = createAction('$1/load/success')
+export const $1LoadError = createAction('$1/load/error')
 
 const initialState = {
   pending: false,
-  items: []
+  data: {},
 }
 
 export default handleActions(
   {
-    [loadItemsPending]: state => ({
+    [$1LoadPending]: state => ({
       ...state,
       pending: true
     }),
-    [loadItemsSuccess]: (state, action) => ({
+    [$1LoadSuccess]: (state, action) => ({
       ...state,
       pending: false,
-      items: action.payload
+      data: action.payload
     }),
   },
   initialState
@@ -201,13 +201,13 @@ import { map, mergeMap, tap, catchError } from 'rxjs/operators'
 
 import { fetchStoreSettings } from 'src/api/mobile-pages'
 import {
-  loadItemsPending,
-  loadItemsSuccess,
+  loadItemPending,
+  loadItemSuccess,
 } from './index'
 
-const loadItems = action$ =>
+const loadItem = action$ =>
   action$.pipe(
-    ofType(loadItemsPending().type),
+    ofType(loadItemPending().type),
     mergeMap(() =>
       fetchStoreSettings().pipe(map(data => loadItemsSuccess(data)))
     )
