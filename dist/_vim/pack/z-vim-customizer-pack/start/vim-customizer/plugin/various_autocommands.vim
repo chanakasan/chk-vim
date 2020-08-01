@@ -36,8 +36,8 @@ augroup END
 
 augroup mod_ft_css
   autocmd!
-  " autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd FileType css setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  "autocmd FileType css setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
 
 augroup mod_ft_python
@@ -49,11 +49,11 @@ augroup END
 augroup mod_ft_php
   autocmd!
   " tests
-  autocmd FileType php nnoremap <buffer> <leader>t :w \| !clear; phpunit %<cr>
+  "autocmd FileType php nnoremap <buffer> <leader>t :w \| !clear; phpunit %<cr>
   " run
   autocmd FileType php nnoremap <buffer> <leader>r :w \| !clear; php %<cr>
 
-  autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  "autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
 
 " -- END of FileType stuff

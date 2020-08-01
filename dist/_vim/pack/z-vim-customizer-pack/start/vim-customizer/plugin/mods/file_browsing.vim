@@ -15,7 +15,7 @@ cnoremap <c-j>d <C-R>=escape(expand('%:h'), ' ').'/'<cr>
 cnoremap <c-j>f <C-R>=escape(expand('%:t:r'), ' ')<cr>
 
 "" alternate file
-nmap <space><space> <c-^>
+nnoremap ,, <c-^>
 
 "" edit files
 nnoremap <space>e :edit <C-R>=escape(expand('%:h:p'), ' ').'/'<cr>
