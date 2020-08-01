@@ -1,0 +1,19 @@
+snippet tpl_repic
+import { combineEpics, ofType } from 'redux-observable'
+import { EMPTY } from 'rxjs'
+import { map, mergeMap, tap, catchError } from 'rxjs/operators'
+
+import { __r1__ } from 'src/api/__r2__'
+import {
+  loadItemPending,
+  loadItemSuccess,
+} from './reducer'
+
+const loadItem = action$ =>
+  action$.pipe(
+    ofType(loadItemPending().type),
+    mergeMap(() =>
+      __r1__().pipe(map(data => loadItemsSuccess(data)))
+    )
+  )
+endsnippet

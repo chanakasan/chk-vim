@@ -1,0 +1,85 @@
+global !p
+from snippet_helpers import *
+endglobal
+
+snippet tpl_rreducer_basic
+const initialState = {
+
+}
+
+export default (state=initialState, action) => {
+	switch (action.type) {
+		case '$1': {
+			return Object.assign({}, state, {
+				$0
+			})
+		}
+
+		default:
+			return state;
+	}
+}
+endsnippet
+
+snippet tpl_rcom
+import React from "react"
+import styled from 'styled-components'
+
+const MyCom = () => (
+	<>
+		<h1>My Component</h1>$2
+	</>
+)
+
+export default MyCom
+endsnippet
+
+snippet tpl_rcom_class
+import React from 'react'
+
+class `!p
+class_name = get_class_name(re, snip.basename)
+snip.rv = class_name` extends React.Component {$0
+	render() {
+		return (
+			<div className={this.props.className}>
+				This is `!p snip.rv = class_name` component.
+			</div>
+		)
+	}
+}
+
+export default `!p snip.rv = class_name`
+endsnippet
+
+snippet tpl_axios_crud
+export function fetchList(dispatch, queryParams) {
+  return axios.get('_apiPath_?' + qs.stringify(queryParams)).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_LIST`, payload: response.data })
+  })
+}
+
+export function fetchRecord(dispatch, id) {
+  return axios.get(`_apiPath_/${id}`).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function createRecord(dispatch, params) {
+  return axios.post('_apiPath_', params).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function updateRecord(dispatch, params) {
+  return axios.patch(`_apiPath_/${params.id}`, params).then((response) => {
+    dispatch({ type: `${_Namespace_}/LOAD_RECORD_TO_EDIT`, payload: response.data })
+  })
+}
+
+export function destroyRecord(dispatch, record) {
+  return axios.delete(`_apiPath_/${record.id}`).then(() => {
+    dispatch({ type: `${_Namespace_}/REMOVE_RECORD`, payload: record })
+  })
+}
+endsnippet

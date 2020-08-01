@@ -1,66 +1,18 @@
-snippet tpl_api_ctrl
-class Api::__ModelName__sController < Api::BaseAppController
-  def index
-    send_success(__ModelName__.all)
-  end
-
-  def show
-    record = __ModelName__.find(params[:id])
-    send_success(record)
-  rescue ActiveRecord::RecordNotFound
-    send_not_found
-  end
-
-  def create
-    record = __ModelName__.new(record_params)
-    record.save!
-    send_success(record, status: 201)
-  rescue ActiveRecord::RecordInvalid
-    send_error(record.errors)
-  end
-
-  def update
-    record = __ModelName__.find(params[:id])
-    record.update!(record_params)
-    send_success(record)
-  rescue ActiveRecord::RecordInvalid
-    send_error(record.errors)
-  rescue ActiveRecord::RecordNotFound
-    send_not_found
-  end
-
-  def destroy
-    record = __ModelName__.find(params[:id])
-    record.destroy
-    send_no_content
-  rescue ActiveRecord::RecordNotFound
-    send_not_found
-  end
-
-  protected
-  def record_params
-    params.require(:__model_name__).permit(
-      #> todo
-    )
-  end
-end
-endsnippet
-
-snippet api_request_spec
+snippet tpl_rails_api_crud_spec
 require 'rails_helper'
 
-RSpec.describe "__ModelName__ API", type: :request do
+RSpec.describe "__r1__ API", type: :request do
   before do
     test_account = create_test_company_and_login
     host! "#{test_account.subdomain}.#{ENV['DEPLOYED_DOMAIN']}"
   end
 
   def endpoint_url
-    "/api/__model_name__s"
+    "/api/__r2__s"
   end
 
   def endpoint_url_with_id(id)
-    "/api/__model_name__s/#{id}"
+    "/api/__r2__s/#{id}"
   end
 
   context "list" do
@@ -72,7 +24,7 @@ RSpec.describe "__ModelName__ API", type: :request do
       expect(response.status).to eq(200)
       #> assert returned data
       expect(result[:items].count).to eq(1)
-      expect(result[:items].first[:__some_attr__]).to eq('__some_attr_value__')
+      expect(result[:items].first[:__attr1__]).to eq('__attr1_value__')
     end
 
     it "returns an empty array if no records are found" do
@@ -105,7 +57,7 @@ RSpec.describe "__ModelName__ API", type: :request do
       result = json(response.body)
       expect(response.status).to eq(200)
       #> assert returned data
-      expect(result[:__some_attr__]).to eq('__some_attr_value__')
+      expect(result[:__attr1__]).to eq('__attr1_value__')
     end
 
     it "returns 404 response if record not found" do
@@ -120,24 +72,24 @@ RSpec.describe "__ModelName__ API", type: :request do
       #> set params for the create request
       record_params = {
         #> todo
-				__some_attr__: __some_attr_value__,
+				__attr1__: __attr1_value__,
       }
 
-      post endpoint_url, params: { __model_name__: record_params }
+      post endpoint_url, params: { __r2__: record_params }
 
       result = json(response.body)
       expect(response.status).to eq(201)
       expect(result[:id]).to_not be_nil
-      expect(result[:__some_attr__]).to eq('__some_attr_value__')
+      expect(result[:__attr1__]).to eq('__attr1_value__')
     end
 
     it "returns 422 response if failed to create" do
       #> set some invalid data for the request
       invalid_record_params = {
         #> todo
-				__some_attr__: nil,
+				__attr1__: nil,
       }
-      post endpoint_url, params: { __model_name__: invalid_record_params }
+      post endpoint_url, params: { __r2__: invalid_record_params }
 
       result = json(response.body)
       expect(result).to_not be_empty
@@ -150,14 +102,14 @@ RSpec.describe "__ModelName__ API", type: :request do
       record = create_record_1
       #> set params for the update request
       record_params = {
-        __some_attr__: '__some_attr_value__Edited',
+        __attr1__: '__attr1_value__Edited',
       }
-      patch endpoint_url_with_id(record.id), params: { __model_name__: record_params }
+      patch endpoint_url_with_id(record.id), params: { __r2__: record_params }
 
       expect(response.status).to eq(200)
       #> assert updated data
       record.reload
-      expect(record.__some_attr__).to eq('__some_attr_value__Edited')
+      expect(record.__attr1__).to eq('__attr1_value__Edited')
     end
 
     it "returns 422 response if failed to update" do
@@ -165,15 +117,15 @@ RSpec.describe "__ModelName__ API", type: :request do
       #> set some invalid data for the request
       invalid_record_params = {
         #> todo
-				__some_attr__: nil,
+				__attr1__: nil,
       }
-      patch endpoint_url_with_id(record.id), params: { __model_name__: invalid_record_params }
+      patch endpoint_url_with_id(record.id), params: { __r2__: invalid_record_params }
 
       expect(response.status).to eq(422)
     end
 
     it "returns 404 response if record not found" do
-      patch endpoint_url_with_id(123), params: { __model_name__: {} }
+      patch endpoint_url_with_id(123), params: { __r2__: {} }
       expect(response.status).to eq(404)
     end
   end
@@ -184,7 +136,7 @@ RSpec.describe "__ModelName__ API", type: :request do
       delete endpoint_url_with_id(record.id)
 
       expect(response.status).to eq(204)
-      all_records = __ModelName__.all
+      all_records = __r1__.all
       expect(all_records.count).to eq(0)
     end
 
@@ -196,13 +148,13 @@ RSpec.describe "__ModelName__ API", type: :request do
 
   protected
   def create_record_1
-    __ModelName__.create!(
-      __some_attr__: '__some_attr_value__',
+    __r1__.create!(
+      __attr1__: '__attr1_value__',
     )
   end
 
   def create_50_records
-    50.times { |i| __ModelName__.create!(__some_attr__: "__some_attr_value__#{i}") }
+    50.times { |i| __r1__.create!(__attr1__: "__attr1_value__#{i}") }
   end
 end
 endsnippet

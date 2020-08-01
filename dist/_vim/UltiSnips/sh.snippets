@@ -1,4 +1,4 @@
-# debug {{{
+#:debug = {{{
 snippet d
 echo "[DEBUG] $1 = $$1"
 endsnippet
@@ -7,19 +7,3 @@ snippet l
 echo "[INFO] $1"
 endsnippet
 # }}}
-
-snippet get_session_name
-get_session_name() {
-  local basename_str=$(basename `pwd`)
-  echo "${basename_str//\./_}"
-}
-endsnippet
-
-snippet rename.rb "" w
-require 'fileutils'
-
-Dir["*.mp3"].each_with_index do |f, i|
-  new_f = "Pickwick_Papers_#{i}.mp3"
-  puts f, new_f
-\end
-endsnippet

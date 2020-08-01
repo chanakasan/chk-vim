@@ -1,0 +1,27 @@
+snippet tpl_rreducer
+import { createAction, handleActions } from 'redux-actions'
+
+export const __r1__LoadPending = createAction('__r1__/load/pending')
+export const __r1__LoadSuccess = createAction('__r1__/load/success')
+export const __r1__LoadError = createAction('__r1__/load/error')
+
+const initialState = {
+  pending: false,
+  data: {},
+}
+
+export default handleActions(
+  {
+    [__r1__LoadPending]: state => ({
+      ...state,
+      pending: true
+    }),
+    [__r1__LoadSuccess]: (state, action) => ({
+      ...state,
+      pending: false,
+      data: action.payload
+    }),
+  },
+  initialState
+)
+endsnippet
