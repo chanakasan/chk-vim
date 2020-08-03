@@ -7,6 +7,8 @@ A vim distribution
 Follow the below steps. Then you should be able to use the features from this vim distribution.
 
 ```
+git clone <repo>
+cd <repo>
 # copy files to your $HOME
 cp -r dist/_vimrc $HOME/.vimrc
 cp -r dist/_vim $HOME/.vim
