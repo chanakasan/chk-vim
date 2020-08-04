@@ -1,15 +1,3 @@
-" basic mappings {{{
-let mapleader = ","
-" }}}
-
-" basic commands {{{
-command! Evimrc :e $MYVIMRC
-command! Sovimrc :so $MYVIMRC
-command! Egvimrc :e $MYGVIMRC
-command! Sogvimrc :so $MYGVIMRC
-" }}}
-
-
 " to improve vim speed, set below ruby path if you are using rbenv
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
 
@@ -30,19 +18,9 @@ set report=0
 set autoread
 
 set wildmenu
-set wildmode=full
+set wildmode=longest:full,full
 set wildignore+=*.swp,*.bak,*.pyc,*.class
 
 if v:version > 703
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
-
-" Backup files {{{
-set undofile
-set backup
-set writebackup
-
-set backupdir=~/.vim-tmp,~/.tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,/var/tmp,/tmp
-set undodir=~/.vim-tmp,~/.tmp,/var/tmp,/tmp
-" }}}

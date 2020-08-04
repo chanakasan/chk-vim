@@ -12,10 +12,3 @@ end
 
 set background=dark
 colorscheme chk256
-
-hi ExtraWhitespace ctermbg=red guibg=#FF6C60
-match ExtraWhitespace /\s\+$/
-
-hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
-hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
-hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
